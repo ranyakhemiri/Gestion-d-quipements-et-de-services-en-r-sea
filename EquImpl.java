@@ -8,8 +8,9 @@ public class EquImpl extends UnicastRemoteObject implements EquInter{
     // on instancie un equipement "eq"
     private Equipement eq;
 
-    public EquImpl() throws RemoteException{
+    public EquImpl(Equipement eq) throws RemoteException{
         super();
+        this.eq= eq;
     }
 
     // récupérer le nom de l'equipement

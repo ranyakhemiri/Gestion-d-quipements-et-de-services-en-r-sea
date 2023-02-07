@@ -1,4 +1,6 @@
 import java.rmi.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import java.net.MalformedURLException;
 
 //l'idée est que l'utilisateur aura le choix d'effectuer plusieurs operations 
@@ -9,15 +11,17 @@ public class Client{
     Client(){
         
     }
-    public static void main (String[] args) throws MalformedURLException, RemoteException{
+    public static void main (String[] args) throws MalformedURLException, RemoteException, NotBoundException{
         //pour pouvoir taper un choix à partir du clavier 
         Scanner sc= new Scanner(System.in);
 
         //on cherche le chemin de l'annuaire déclaré dans le serveur
-        EquInter eq = (EquInter) Naming.lookup("rmi://localhost:1090/equipdape");
+        EquInter eq = (EquInter)Naming.lookup("rmi://localhost:1099/equipdape");
+        
+        boolean state = true;
         
         //boucle du menu
-        while (true){
+        while (state){
             System.out.println("1. Get name of equipment");
             System.out.println("2. Set name of equipment");
             System.out.println("3. Get address of equipment");
@@ -25,7 +29,7 @@ public class Client{
             System.out.println("5. Get service of equipment");
             System.out.println("6. Set service of equipment");
             System.out.println("7. Quit");
-        }
+        
 
         //on implemente un try/catch au cas de mauvais input de la part de l'utilisateur
         //car le format obligatoire est un entier 
@@ -35,7 +39,8 @@ public class Client{
             switch (choice)
             {
                 case 1:
-                    System.out.println("The name of the equipment is : ",eq.getName());
+                    System.out.println("The name of the equipment is : ");
+                    System.out.println(eq.getName());
                     break;
                 case 2:
                     System.out.println("Enter new name : ");
@@ -44,7 +49,8 @@ public class Client{
                     System.out.println("");
                     break;
                 case 3:
-                    System.out.println("The address of the equipment is : ",eq.getAddress());
+                    System.out.println("The address of the equipment is : ");
+                    System.out.println(eq.getAddress());
                     break;
                 case 4:
                     System.out.println("Enter new address : ");
@@ -53,7 +59,8 @@ public class Client{
                     System.out.println("");
                     break;
                 case 5:
-                    System.out.println("The service of the equipment is : ",eq.getService());
+                    System.out.println("The service of the equipment is : ");
+                    System.out.println(eq.getService());
                     break;
                 case 6:
                     System.out.println("Enter new service : ");
@@ -62,16 +69,17 @@ public class Client{
                     System.out.println("");
                     break;
                 case 7:
-                    exit();
+                    state=false;
                     break;
 
             }
         } 
         catch (InputMismatchException e){
-            System.our.println("Wrong input type.");
+            System.out.println("Wrong input type.");
             sc.next();
+        	}
         }
-
+        sc.close();
+        
     }
-    sc.close();
 }
