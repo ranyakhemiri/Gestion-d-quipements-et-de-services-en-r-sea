@@ -28,14 +28,24 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     // définie de manière permanent et case-sensitive ici
     private String community = "MCPRproject";
 
-    // récupérer le nom de l'equipement
+    // ******** MANIPULATION DE LA BASE DE DONNEES ********
+    // il faut ajouter la vérification de community à chaque manipulation
+    // mais on proposera deux types d'accès
+    // acces en lecture seulement
+    // acces en lecture/ecriture où on demandera le mot de passe par exemple pour
+    // modifier un attribut
+
     public String getName() throws RemoteException {
         return eq.getName();
     }
 
     // modifier le nom de l'equipement
-    public void setName(String name) throws RemoteException {
-        eq.setName(name);
+    public void setName(String name, String mdp) throws RemoteException {
+        if (mdp == community) {
+            eq.setName(name);
+        } else {
+            System.out.println("Wrong access! Try again.");
+        }
     }
 
     // récupérer le nom du service
@@ -44,8 +54,13 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     }
 
     // modifier le nom du service
-    public void setService(String s) throws RemoteException {
-        eq.setService(s);
+    public void setService(String s, String mdp) throws RemoteException {
+        if (mdp == community) {
+            eq.setService(s);
+        } else {
+            System.out.println("Wrong access! Try again.");
+        }
+
     }
 
     // récupérer le nom du service
@@ -54,7 +69,11 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     }
 
     // modifier le nom du service
-    public void setAddress(String ad) throws RemoteException {
-        eq.setAddress(ad);
+    public void setAddress(String ad, String mdp) throws RemoteException {
+        if (mdp == community) {
+            eq.setAddress(ad);
+        } else {
+            System.out.println("Wrong access! Try again.");
+        }
     }
 }
