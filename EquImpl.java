@@ -23,6 +23,11 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         eqHash.put("Id", Integer.toString(eq.getId()));
     }
 
+    // ******** SECURITE LA BASE DE DONNEES ********
+    // on s'inspire de SNMP et on choisit la notion de community
+    // définie de manière permanent et case-sensitive ici
+    private String community = "MCPRproject";
+
     // récupérer le nom de l'equipement
     public String getName() throws RemoteException {
         return eq.getName();
