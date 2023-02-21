@@ -1,3 +1,4 @@
+import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -6,21 +7,11 @@ import java.util.HashMap;
 
 public class EquImpl extends UnicastRemoteObject implements EquInter {
 
-    // on instancie un equipement "eq"
-    private Equipement eq;
-
-    // ******** BASE DE DONNEES ********
-    // on choisit de créer une HashMap pour l'equipement
-    // on peut aussir choisir de créer un fichier texte en guise de base de données
-    private HashMap<String, String> eqHash = new HashMap<>();
+    private Equipement e;
 
     public EquImpl(Equipement eq) throws RemoteException {
         super();
-        this.eq = eq;
-        eqHash.put("Name", eq.getName());
-        eqHash.put("Address", eq.getAddress());
-        eqHash.put("Service", eq.getService());
-        eqHash.put("Id", Integer.toString(eq.getId()));
+        this.e = eq;
     }
 
     // ******** SECURITE LA BASE DE DONNEES ********
@@ -36,13 +27,14 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     // modifier un attribut
 
     public String getName() throws RemoteException {
-        return eq.getName();
+        return e.getName();
     }
 
     // modifier le nom de l'equipement
     public void setName(String name, String mdp) throws RemoteException {
-        if (mdp == community) {
-            eq.setName(name);
+        if (mdp == this.community) {
+            e.setName(name);
+            // this will automatically override the old value
         } else {
             System.out.println("Wrong access! Try again.");
         }
@@ -50,30 +42,29 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
 
     // récupérer le nom du service
     public String getService() throws RemoteException {
-        return eq.getService();
+        return e.getServices();
     }
 
     // modifier le nom du service
     public void setService(String s, String mdp) throws RemoteException {
-        if (mdp == community) {
-            eq.setService(s);
-        } else {
-            System.out.println("Wrong access! Try again.");
-        }
-
+        e.setService(s);
     }
 
     // récupérer le nom du service
     public String getAddress() throws RemoteException {
-        return eq.getAddress();
+        return e.getAddress();
     }
 
     // modifier le nom du service
     public void setAddress(String ad, String mdp) throws RemoteException {
         if (mdp == community) {
-            eq.setAddress(ad);
+            e.setAddress(ad);
         } else {
             System.out.println("Wrong access! Try again.");
         }
+    }
+
+    public String getNext(File db) {
+        return "";
     }
 }

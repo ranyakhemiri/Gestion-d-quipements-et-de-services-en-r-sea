@@ -14,4 +14,5 @@ public interface EquInter extends Remote {
 
     public void setAddress(String ad, String mdp) throws RemoteException;
 
+    public String getNext() throws RemoteException;
 }
