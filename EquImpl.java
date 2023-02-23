@@ -18,7 +18,7 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     // ******** SECURITE LA BASE DE DONNEES ********
     // on s'inspire de SNMP et on choisit la notion de community
     // définie de manière permanent et case-sensitive ici
-    private String community = "MCPRproject";
+    protected String community = "MCPRproject";
 
     // ******** MANIPULATION DE LA BASE DE DONNEES ********
     // il faut ajouter la vérification de community à chaque manipulation
@@ -32,12 +32,12 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     }
 
     // modifier le nom de l'equipement
-    public void setName(String name, String mdp) throws RemoteException {
-        if (mdp == this.community) {
+    public String setName(String name, String mdp) throws RemoteException {
+        if (mdp.equals(this.community)) {
             e.setName(name);
-            // this will automatically override the old value
+            return "Opération réussie";
         } else {
-            System.out.println("Wrong access! Try again.");
+            return "Wrong access! Try again.";
         }
     }
 
@@ -47,8 +47,13 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     }
 
     // modifier le nom du service
-    public void setService(String s, String mdp) throws RemoteException {
-        e.setService(s);
+    public String setService(String s, String mdp) throws RemoteException {
+        if (mdp.equals(this.community)) {
+            e.setService(s);
+            return "Opération réussie";
+        } else {
+            return "Wrong access! Try again.";
+        }
     }
 
     // récupérer le nom du service
@@ -57,22 +62,24 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     }
 
     // modifier le nom du service
-    public void setAddress(String ad, String mdp) throws RemoteException {
-        if (mdp == community) {
+    public String setAddress(String ad, String mdp) throws RemoteException {
+        if (mdp.equals(community)) {
             e.setAddress(ad);
+            return "Opération réussie";
+
         } else {
-            System.out.println("Wrong access! Try again.");
+            return "Wrong access! Try again.";
         }
     }
 
     public String getNext(int i) {
         if (i == 1) {
-            return e.eqHash.get("Name");
+            return "Name:  " + e.eqHash.get("Name");
         } else if (i == 2) {
-            return e.eqHash.get("Service");
+            return "Service:  " + e.eqHash.get("Service");
         } else if (i == 3) {
-            return e.eqHash.get("Address");
+            return "Address:  " + e.eqHash.get("Address");
         } else
-            return e.eqHash.get("Id");
+            return "Id:  " + e.eqHash.get("Id");
     }
 }

@@ -41,7 +41,7 @@ public class Equipement {
     // une fois que l'objet a été créé
 
     public void setName(String name) {
-        eqHash.put("Name", name);
+        eqHash.replace("Name", name);
     }
 
     public void setAddress(String ad) {

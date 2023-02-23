@@ -51,7 +51,7 @@ public class Client {
                         String new_name = sc.nextLine();
                         System.out.println("Enter password for access : ");
                         String psswd2 = sc.nextLine();
-                        eq.setName(new_name, psswd2);
+                        System.out.println(eq.setName(new_name, psswd2));
                         break;
                     case 3:
                         System.out.println("The address of the equipment is : ");
@@ -62,8 +62,7 @@ public class Client {
                         String new_add = sc.nextLine();
                         System.out.println("Enter password for access : ");
                         String psswd4 = sc.nextLine();
-                        eq.setAddress(new_add, psswd4);
-                        System.out.println("");
+                        System.out.println(eq.setAddress(new_add, psswd4));
                         break;
                     case 5:
                         System.out.println("The service of the equipment is : ");
@@ -74,7 +73,7 @@ public class Client {
                         String new_service = sc.nextLine();
                         System.out.println("Enter password for access : ");
                         String psswd6 = sc.nextLine();
-                        eq.setService(new_service, psswd6);
+                        System.out.println(eq.setService(new_service, psswd6));
                         System.out.println("");
                         break;
                     case 7:
