@@ -2,6 +2,7 @@ import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
+import java.util.Scanner;
 
 // dans cette classe, on définit les méthodes abstraites déclarées dans l'interface "EquInter"
 
@@ -64,7 +65,14 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         }
     }
 
-    public String getNext(File db) {
-        return "";
+    public String getNext(int i) {
+        if (i == 1) {
+            return e.eqHash.get("Name");
+        } else if (i == 2) {
+            return e.eqHash.get("Service");
+        } else if (i == 3) {
+            return e.eqHash.get("Address");
+        } else
+            return e.eqHash.get("Id");
     }
 }

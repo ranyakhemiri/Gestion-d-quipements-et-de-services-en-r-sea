@@ -1,2 +1,0 @@
-Id:1Name:Commutateur:Service:Informatique:Address:salle307
-Id:2Name:Routeur:Service:Informatique:Address:salle307

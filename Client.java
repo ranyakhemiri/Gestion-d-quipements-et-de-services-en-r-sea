@@ -18,7 +18,11 @@ public class Client {
         // on cherche le chemin de l'annuaire déclaré dans le serveur
         EquInter eq = (EquInter) Naming.lookup("rmi://localhost:1099/equipdape");
 
+        // pour garder le menu affiché
         boolean state = true;
+
+        // indice pour le getNext pour connaitre la position du
+        int ind = 0;
 
         // boucle du menu
         while (state) {
@@ -74,7 +78,13 @@ public class Client {
                         System.out.println("");
                         break;
                     case 7:
-                        System.out.println(eq.getNext());
+                        // a chaque appel de getnext, on incremente l'indice ind
+                        // par contre, il faut le diviser par 4 parce qu'on a 4 clés au total a
+                        // parcourir
+                        // apres on refait le parcours depuis le début (comme une boucle)
+                        ind += 1;
+                        ind = ind % 4;
+                        System.out.println(eq.getNext(ind));
                         break;
                     case 8:
                         state = false;
