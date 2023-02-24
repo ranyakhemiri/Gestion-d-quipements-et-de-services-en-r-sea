@@ -56,14 +56,14 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         }
     }
 
-    // récupérer le nom du service
+    // récupérer l'adresse
     public String getAddress() throws RemoteException {
         return e.getAddress();
     }
 
-    // modifier le nom du service
+    // modifier l'adresse
     public String setAddress(String ad, String mdp) throws RemoteException {
-        if (mdp.equals(community)) {
+        if (mdp.equals(this.community)) {
             e.setAddress(ad);
             return "Opération réussie";
 
