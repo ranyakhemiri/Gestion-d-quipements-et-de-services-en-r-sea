@@ -1,8 +1,5 @@
-import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
-import java.util.Scanner;
 
 // dans cette classe, on définit les méthodes abstraites déclarées dans l'interface "EquInter"
 
