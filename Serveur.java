@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 
 // Etape 1 : instancier l'implantation   
 // Etape 2 : rendre accessible les services RMI à distance 
@@ -29,11 +30,13 @@ public class Serveur extends UnicastRemoteObject implements TrapInter {
 
         // Etape 1: instancier l'imp
 
-        Equipement e = new Equipement(3, "Routeur", "salle307", "Informatique");
+        Equipement e = new Equipement(1, "Routeur", "salle307", "Informatique");
         EquImpl o = new EquImpl(e);
 
         // Etape 2: naming
         Naming.rebind("rmi://localhost:1099/equipdape", o);
+        Naming.rebind("rmi://localhost:1099/TrapServer", o);
+
     }
 
 }
