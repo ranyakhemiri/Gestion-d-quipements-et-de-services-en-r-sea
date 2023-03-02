@@ -11,7 +11,16 @@ import java.rmi.registry.LocateRegistry;
 // Etape 2 : rendre accessible les services RMI à distance 
 // à l'aide de Naming
 
-public class Serveur {
+public class Serveur extends UnicastRemoteObject implements TrapInter {
+
+    public Serveur() throws RemoteException {
+        super();
+    }
+
+    // methode distante à utiliser: getName
+    public String trapNom(EquInter e) throws RemoteException {
+        return "The name of the equipment has been changed to " + e.getName();
+    }
 
     public static void main(String[] args) throws RemoteException, MalformedURLException {
         // Etape 0 : lancer l'annuaire depuis le serveur directement
@@ -22,7 +31,6 @@ public class Serveur {
 
         Equipement e = new Equipement(3, "Routeur", "salle307", "Informatique");
         EquImpl o = new EquImpl(e);
-
 
         // Etape 2: naming
         Naming.rebind("rmi://localhost:1099/equipdape", o);
