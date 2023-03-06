@@ -14,8 +14,7 @@ public class Serveur {
         // port choisi: 1099
         LocateRegistry.createRegistry(1099);
 
-        // Etape 1: instancier l'imp
-
+        // Etape 1: instancier l'imp / l'agent
         Equipement e = new Equipement(3, "Routeur", "salle307", "Informatique");
         EquImpl o = new EquImpl(e);
 

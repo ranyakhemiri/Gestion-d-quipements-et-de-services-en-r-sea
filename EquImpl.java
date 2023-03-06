@@ -79,4 +79,5 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         } else
             return "Id:  " + e.eqHash.get("Id");
     }
+
 }

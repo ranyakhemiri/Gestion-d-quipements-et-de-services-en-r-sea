@@ -34,7 +34,6 @@ public class Client {
             System.out.println("6. Set service of equipment");
             System.out.println("7. Get next value");
             System.out.println("8. Quit");
-
             // on implemente un try/catch au cas de mauvais input de la part de
             // l'utilisateur
             // car le format obligatoire est un entier
