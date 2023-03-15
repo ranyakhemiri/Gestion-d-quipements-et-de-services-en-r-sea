@@ -1,8 +1,6 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-// dans cette classe, on définit les méthodes abstraites déclarées dans l'interface "EquInter"
-
 public class EquImpl extends UnicastRemoteObject implements EquInter {
 
     private Equipement e;
@@ -12,17 +10,8 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         this.e = eq;
     }
 
-    // ******** SECURITE LA BASE DE DONNEES ********
-    // on s'inspire de SNMP et on choisit la notion de community
-    // définie de manière permanent et case-sensitive ici
     protected String community = "MCPRproject";
-
-    // ******** MANIPULATION DE LA BASE DE DONNEES ********
-    // il faut ajouter la vérification de community à chaque manipulation
-    // mais on proposera deux types d'accès
-    // acces en lecture seulement
-    // acces en lecture/ecriture où on demandera le mot de passe par exemple pour
-    // modifier un attribut
+    private boolean trap;
 
     public String getName() throws RemoteException {
         return e.getName();
@@ -30,12 +19,17 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
 
     // modifier le nom de l'equipement
     public String setName(String name, String mdp) throws RemoteException {
+        String old_name = e.getName();
+        String new_name = name;
         if (mdp.equals(this.community)) {
             e.setName(name);
-            return "Opération réussie";
-        } else {
-            return "Wrong access! Try again.";
+            if (trap) {
+                return "NOTIFICATION : The name changed from " + old_name + "to : " + new_name;
+
+            } else
+                return "Opération réussie";
         }
+        return "Wrong access! Try again.";
     }
 
     // récupérer le nom du service
@@ -45,9 +39,14 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
 
     // modifier le nom du service
     public String setService(String s, String mdp) throws RemoteException {
+        String old_service = e.getServices();
         if (mdp.equals(this.community)) {
             e.setService(s);
-            return "Opération réussie";
+            if (trap) {
+                return "NOTIFICATION : The service changed from " + old_service + "to : " + s;
+            } else
+                return "Opération réussie";
+
         } else {
             return "Wrong access! Try again.";
         }
@@ -60,9 +59,13 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
 
     // modifier l'adresse
     public String setAddress(String ad, String mdp) throws RemoteException {
+        String old_address = e.getAddress();
         if (mdp.equals(this.community)) {
             e.setAddress(ad);
-            return "Opération réussie";
+            if (trap) {
+                return "NOTIFICATION : The address changed from " + old_address + "to : " + ad;
+            } else
+                return "Opération réussie";
 
         } else {
             return "Wrong access! Try again.";
@@ -78,6 +81,14 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
             return "Address:  " + e.eqHash.get("Address");
         } else
             return "Id:  " + e.eqHash.get("Id");
+    }
+
+    public void subscribe() {
+        this.trap = true;
+    }
+
+    public void unsubscribe() {
+        this.trap = false;
     }
 
 }

@@ -16,5 +16,7 @@ public interface EquInter extends Remote {
 
     public String getNext(int i) throws RemoteException;
 
-    public String trap() throws RemoteException;
+    public void unsubscribe() throws RemoteException;
+
+    public void subscribe() throws RemoteException;
 }

@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 //le client ici gère à distance l'équipement 
 
 public class Client {
+    // Agent
     Client() {
     }
 
@@ -33,7 +34,8 @@ public class Client {
             System.out.println("5. Get service of equipment");
             System.out.println("6. Set service of equipment");
             System.out.println("7. Get next value");
-            System.out.println("8. Quit");
+            System.out.println("8. Would you like to subscribe to traps? (y/n)");
+            System.out.println("9. Quit");
             // on implemente un try/catch au cas de mauvais input de la part de
             // l'utilisateur
             // car le format obligatoire est un entier
@@ -85,6 +87,16 @@ public class Client {
                         System.out.println(eq.getNext(ind));
                         break;
                     case 8:
+                        String answer = sc.nextLine();
+                        if (answer.equals("y")) {
+                            eq.subscribe();
+                        } else if (answer.equals("n")) {
+                            eq.unsubscribe();
+                        } else {
+                            System.out.println("Please answer by y or n!");
+                        }
+                        break;
+                    case 9:
                         state = false;
                         break;
                 }
