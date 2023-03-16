@@ -23,8 +23,9 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         String new_name = name;
         if (mdp.equals(this.community)) {
             e.setName(name);
+            // si abonné aux trap nom :
             if (e.traps.containsKey("name")) {
-                String msg = "Le nom a changé de " + old_name + " a : " + new_name;
+                String msg = "Le nom a changé de " + old_name + " a " + new_name;
                 e.traps.get("name").notify(msg);
             }
             return "Opération réussie";
@@ -40,8 +41,13 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     // modifier le nom du service
     public String setService(String s, String mdp) throws RemoteException {
         String old_service = e.getServices();
+        String new_s = s;
         if (mdp.equals(this.community)) {
             e.setService(s);
+            if (e.traps.containsKey("service")) {
+                String msg = "Le service a changé de " + old_service + " a " + new_s;
+                e.traps.get("service").notify(msg);
+            }
             return "Opération réussie";
 
         } else {
@@ -59,6 +65,10 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         String old_address = e.getAddress();
         if (mdp.equals(this.community)) {
             e.setAddress(ad);
+            if (e.traps.containsKey("address")) {
+                String msg = " l adresse a changé de " + old_address + " a " + ad;
+                e.traps.get("address").notify(msg);
+            }
             return "Opération réussie";
 
         } else {

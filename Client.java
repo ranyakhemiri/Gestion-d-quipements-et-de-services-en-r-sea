@@ -13,19 +13,14 @@ public class Client {
     }
 
     public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-        // pour pouvoir taper un choix à partir du clavier
         Scanner sc = new Scanner(System.in);
 
         // on cherche le chemin de l'annuaire déclaré dans le serveur
         EquInter eq = (EquInter) Naming.lookup("rmi://localhost:1099/equipdape");
 
-        // pour garder le menu affiché
         boolean state = true;
-
-        // indice pour le getNext pour connaitre la position du
         int ind = 0;
 
-        // boucle du menu
         while (state) {
             System.out.println("1. Get name of equipment");
             System.out.println("2. Set name of equipment");
@@ -35,10 +30,10 @@ public class Client {
             System.out.println("6. Set service of equipment");
             System.out.println("7. Get next value");
             System.out.println("8. Would you like to subscribe (y) or unsubscribe (n) to name traps?");
-            System.out.println("9. Quit");
-            // on implemente un try/catch au cas de mauvais input de la part de
-            // l'utilisateur
-            // car le format obligatoire est un entier
+            System.out.println("9. Would you like to subscribe (y) or unsubscribe (n) to service traps?");
+            System.out.println("10. Would you like to subscribe (y) or unsubscribe (n) to address traps?");
+            System.out.println("11. Quit");
+
             try {
                 int choice = sc.nextInt();
                 sc.nextLine();
@@ -89,12 +84,36 @@ public class Client {
                             eq.subscribe("name", nameTrap);
 
                         } else if (answer.equals("n")) {
-
+                            eq.unsubscribe("name");
                         } else {
                             System.out.println("Please answer by y or n!");
                         }
                         break;
                     case 9:
+                        String answ = sc.nextLine();
+                        if (answ.equals("y")) {
+                            TrapImpl sTrap = new TrapImpl();
+                            eq.subscribe("service", sTrap);
+
+                        } else if (answ.equals("n")) {
+                            eq.unsubscribe("service");
+                        } else {
+                            System.out.println("Please answer by y or n!");
+                        }
+                        break;
+                    case 10:
+                        String ans = sc.nextLine();
+                        if (ans.equals("y")) {
+                            TrapImpl adTrap = new TrapImpl();
+                            eq.subscribe("address", adTrap);
+
+                        } else if (ans.equals("n")) {
+                            eq.unsubscribe("address");
+                        } else {
+                            System.out.println("Please answer by y or n!");
+                        }
+                        break;
+                    case 11:
                         state = false;
                         break;
                 }

@@ -48,14 +48,13 @@ public class Equipement {
 
     // trapinter
     public void addTrap(String type, TrapInter t) {
-        if (type == "name") {
-            traps.put("name", t);
-        }
-        if (type == "service") {
-            traps.put("service", t);
-        }
-        if (type == "address") {
-            traps.put("address", t);
+        switch (type) {
+            case "name":
+                traps.put("name", t);
+            case "service":
+                traps.put("service", t);
+            case "address":
+                traps.put("address", t);
         }
     }
 
@@ -63,3 +62,9 @@ public class Equipement {
         this.traps.remove(type);
     }
 }
+/*
+ * etape 4 :
+ * setManager de bas niveau : que lequipement qu'il controle
+ * setManager par l'agent de haut niveau : tout les equipements seront controle
+ * par ex changer une description
+ */
