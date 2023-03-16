@@ -1,7 +1,9 @@
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Equipement {
     public HashMap<String, String> eqHash = new HashMap<>();
+    public HashMap<String, TrapInter> traps = new HashMap<>();
 
     public Equipement(int id, String name, String ad, String s) {
         eqHash.put("Name", name);
@@ -44,4 +46,20 @@ public class Equipement {
         eqHash.put("Service", s);
     }
 
+    // trapinter
+    public void addTrap(String type, TrapInter t) {
+        if (type == "name") {
+            traps.put("name", t);
+        }
+        if (type == "service") {
+            traps.put("service", t);
+        }
+        if (type == "address") {
+            traps.put("address", t);
+        }
+    }
+
+    public void removeTrap(String type) {
+        this.traps.remove(type);
+    }
 }

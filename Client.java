@@ -34,7 +34,7 @@ public class Client {
             System.out.println("5. Get service of equipment");
             System.out.println("6. Set service of equipment");
             System.out.println("7. Get next value");
-            System.out.println("8. Would you like to subscribe to traps? (y/n)");
+            System.out.println("8. Would you like to subscribe (y) or unsubscribe (n) to name traps?");
             System.out.println("9. Quit");
             // on implemente un try/catch au cas de mauvais input de la part de
             // l'utilisateur
@@ -78,10 +78,6 @@ public class Client {
                         System.out.println("");
                         break;
                     case 7:
-                        // a chaque appel de getnext, on incremente l'indice ind
-                        // par contre, il faut le diviser par 4 parce qu'on a 4 clés au total a
-                        // parcourir
-                        // apres on refait le parcours depuis le début (comme une boucle)
                         ind += 1;
                         ind = ind % 4;
                         System.out.println(eq.getNext(ind));
@@ -89,9 +85,11 @@ public class Client {
                     case 8:
                         String answer = sc.nextLine();
                         if (answer.equals("y")) {
-                            eq.subscribe();
+                            TrapImpl nameTrap = new TrapImpl();
+                            eq.subscribe("name", nameTrap);
+
                         } else if (answer.equals("n")) {
-                            eq.unsubscribe();
+
                         } else {
                             System.out.println("Please answer by y or n!");
                         }

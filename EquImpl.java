@@ -1,5 +1,6 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Date;
 
 public class EquImpl extends UnicastRemoteObject implements EquInter {
 
@@ -11,7 +12,6 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
     }
 
     protected String community = "MCPRproject";
-    private boolean trap;
 
     public String getName() throws RemoteException {
         return e.getName();
@@ -23,11 +23,11 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         String new_name = name;
         if (mdp.equals(this.community)) {
             e.setName(name);
-            if (trap) {
-                return "NOTIFICATION : The name changed from " + old_name + "to : " + new_name;
-
-            } else
-                return "Opération réussie";
+            if (e.traps.containsKey("name")) {
+                String msg = "Le nom a changé de " + old_name + " a : " + new_name;
+                e.traps.get("name").notify(msg);
+            }
+            return "Opération réussie";
         }
         return "Wrong access! Try again.";
     }
@@ -42,10 +42,7 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         String old_service = e.getServices();
         if (mdp.equals(this.community)) {
             e.setService(s);
-            if (trap) {
-                return "NOTIFICATION : The service changed from " + old_service + "to : " + s;
-            } else
-                return "Opération réussie";
+            return "Opération réussie";
 
         } else {
             return "Wrong access! Try again.";
@@ -62,10 +59,7 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
         String old_address = e.getAddress();
         if (mdp.equals(this.community)) {
             e.setAddress(ad);
-            if (trap) {
-                return "NOTIFICATION : The address changed from " + old_address + "to : " + ad;
-            } else
-                return "Opération réussie";
+            return "Opération réussie";
 
         } else {
             return "Wrong access! Try again.";
@@ -83,12 +77,11 @@ public class EquImpl extends UnicastRemoteObject implements EquInter {
             return "Id:  " + e.eqHash.get("Id");
     }
 
-    public void subscribe() {
-        this.trap = true;
+    public void subscribe(String type, TrapInter trap) {
+        e.addTrap(type, trap);
     }
 
-    public void unsubscribe() {
-        this.trap = false;
+    public void unsubscribe(String type) {
+        e.removeTrap(type);
     }
-
 }
